@@ -36,6 +36,7 @@ pubnub.subscribe({
 
 exports.listenner = (req,res) => {
 
+  console.log(req.body)
   if(pubnub[req.body.subKey])
     return res.send({message : "ok"})
   
