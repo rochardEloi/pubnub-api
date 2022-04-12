@@ -37,12 +37,18 @@ pubnub.subscribe({
 exports.listenner = (req,res) => {
 
   console.log(req.body)
-  if(pubnub[req.body.subKey])
+  if(pubnub[req.body.subKey]){
+    console.log("Subscribing..");
+    pubnub[req.body.subKey].subscribe({
+      channels: [req.body.channel],
+    });
     return res.send({message : "ok"})
+  }
+    
   
 
   pubnub[req.body.subKey] = new PubNub({
-    publishKey: "pub-c-403be690-b51f-4f75-aa60-0cd7a00b6721",
+    //publishKey: "pub-c-403be690-b51f-4f75-aa60-0cd7a00b6721",
     subscribeKey: req.body.subKey,
     authKey:req.body.authKey,
     uuid: uuid.v4(),
@@ -73,7 +79,7 @@ exports.listenner = (req,res) => {
     channels: [req.body.channel],
   });
   
-  res.send({message : "ok"})
+  return res.send({message : "ok"})
 }
  
 
