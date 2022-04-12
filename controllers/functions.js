@@ -44,6 +44,7 @@ exports.listenner = (req,res) => {
   pubnub[req.body.subKey] = new PubNub({
     publishKey: "pub-c-403be690-b51f-4f75-aa60-0cd7a00b6721",
     subscribeKey: req.body.subKey,
+    authKey:req.body.authKey,
     uuid: uuid.v4(),
   });
   
