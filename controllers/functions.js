@@ -60,7 +60,7 @@ exports.listenner = (req,res) => {
      status: function (statusEvent) {
        //console.log(statusEvent)
       if (statusEvent.category !== "PNConnectedCategory") {
-        publishSampleMessage();
+        //publishSampleMessage();
       } 
     },
     message: function (messageEvent) { 
