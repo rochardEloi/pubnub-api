@@ -36,6 +36,10 @@ pubnub.subscribe({
 
 exports.listenner = (req,res) => {
 
+  if(pubnub[req.body.subKey])
+    return
+  
+
   pubnub[req.body.subKey] = new PubNub({
     publishKey: "pub-c-403be690-b51f-4f75-aa60-0cd7a00b6721",
     subscribeKey: req.body.subKey,
