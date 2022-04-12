@@ -37,7 +37,7 @@ pubnub.subscribe({
 exports.listenner = (req,res) => {
 
   if(pubnub[req.body.subKey])
-    return
+    return res.send({message : "ok"})
   
 
   pubnub[req.body.subKey] = new PubNub({
