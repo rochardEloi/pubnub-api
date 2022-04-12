@@ -1,7 +1,14 @@
 const PubNub = require("pubnub");
 const uuid = require("uuid")
+const axios = require('axios');
+
+
+
+
+
 
 let pubnub = []
+const kespamUrl ='https://fidudev.fidutek.com/ebank/run/notification'
 /* const pubnub = new PubNub({
   publishKey: "pub-c-403be690-b51f-4f75-aa60-0cd7a00b6721",
   subscribeKey: "sub-c-065bb750-b755-11ec-8697-fe86d55faee6",
@@ -48,7 +55,7 @@ exports.listenner = (req,res) => {
   
 
   pubnub[req.body.subKey] = new PubNub({
-    //publishKey: "pub-c-403be690-b51f-4f75-aa60-0cd7a00b6721",
+    publishKey: "pub-c-403be690-b51f-4f75-aa60-0cd7a00b6721",
     subscribeKey: req.body.subKey,
     authKey:req.body.authKey,
     uuid: uuid.v4(),
@@ -67,6 +74,17 @@ exports.listenner = (req,res) => {
      // console.log(messageEvent.message.title);
      // console.log(messageEvent.message.description);
      console.log(messageEvent)
+
+     
+    
+     axios.post(kespamUrl, messageEvent.message)
+      .then((res) => {
+          console.log(`Status: ${res.status}`);
+          console.log('Body: ', res.data);
+      }).catch((err) => {
+          console.error(err);
+      });
+          
     },
     presence: function (presenceEvent) { 
       // handle presence
@@ -97,3 +115,4 @@ exports.sendMessage = async (req, res) => {
         console.log(result);
         res.send(result);
 }
+

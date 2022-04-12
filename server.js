@@ -1,6 +1,20 @@
 const http = require('http');
 const app = require('./app');
 
+const localtunnel = require('localtunnel');
+
+const tunnel = localtunnel(3000, { subdomain: 'hello'},(err, tunnel) => {
+    console.log(tunnel.url)
+});
+
+tunnel.on('close', function() {
+    // When the tunnel is closed
+});
+
+
+
+//tunnel.close();
+
 
 const normalizePort = val => {
     const port = parseInt(val, 10);
