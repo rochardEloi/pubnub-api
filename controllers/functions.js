@@ -9,7 +9,9 @@ const axios = require('axios');
 
 let pubnub = []
 const kespamUrl ='https://fidudev.fidutek.com/ebank/run/notification'
-/* const pubnub = new PubNub({
+
+
+ /*const pubnub = new PubNub({
   publishKey: "pub-c-403be690-b51f-4f75-aa60-0cd7a00b6721",
   subscribeKey: "sub-c-065bb750-b755-11ec-8697-fe86d55faee6",
   uuid: uuid.v4(),
@@ -21,13 +23,20 @@ pubnub.addListener({
    status: function (statusEvent) {
      //console.log(statusEvent)
     if (statusEvent.category !== "PNConnectedCategory") {
-      publishSampleMessage();
+      //publishSampleMessage();
     } 
   },
   message: function (messageEvent) { 
    // console.log(messageEvent.message.title);
    // console.log(messageEvent.message.description);
    console.log(messageEvent)
+    axios.post(kespamUrl, messageEvent.message)
+      .then((res) => {
+          console.log(`Status: ${res.status}`);
+          console.log('Body: ', res.data);
+      }).catch((err) => {
+          console.error(err);
+      }); 
   },
   presence: function (presenceEvent) {
     // handle presence
@@ -38,10 +47,10 @@ console.log("Subscribing..");
 
 pubnub.subscribe({
   channels: ["my_test_channel"],
-}); */
+}); 
+*/
 
-
-exports.listenner = (req,res) => {
+exports.listenner = (req,res) => { 
 
   console.log(req.body)
   if(pubnub[req.body.subKey]){
@@ -58,7 +67,7 @@ exports.listenner = (req,res) => {
     publishKey: "pub-c-403be690-b51f-4f75-aa60-0cd7a00b6721",
     subscribeKey: req.body.subKey,
     authKey:req.body.authKey,
-    uuid: uuid.v4(),
+    uuid: req.body.uuid,
   });
   
   
@@ -67,7 +76,7 @@ exports.listenner = (req,res) => {
      status: function (statusEvent) {
        //console.log(statusEvent)
       if (statusEvent.category !== "PNConnectedCategory") {
-        //publishSampleMessage();
+        publishSampleMessage();
       } 
     },
     message: function (messageEvent) { 
@@ -101,18 +110,16 @@ exports.listenner = (req,res) => {
 }
  
 
-exports.sendMessage = async (req, res) => {
+/* exports.sendMessage = async (req, res) => {
         console.log(
           "Since we're publishing on subscribe connectEvent, we're sure we'll receive the following publish."
         );
         const result = await pubnub.publish({
-          channel: req.body.channel,
-          message: {
-            title: req.body.title,
-            description: req.body.message,
-          },
+          channel: "my_test_channel", //req.body.channel,
+          message: req.body,
         });
         console.log(result);
         res.send(result);
 }
-
+ */
+ 

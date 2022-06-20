@@ -3,7 +3,7 @@ const app = require('./app');
 
 const localtunnel = require('localtunnel');
 
-const tunnel = localtunnel(3000, { subdomain: 'hello'},(err, tunnel) => {
+const tunnel = localtunnel(3000, { subdomain: 'fidutek-pubnub-12345'},(err, tunnel) => {
     console.log(tunnel.url)
 });
 
